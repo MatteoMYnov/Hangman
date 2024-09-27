@@ -46,6 +46,7 @@ func playHangman() {
 	fmt.Printf("Le mot à chercher possède %d lettres.\n", len(word))
 
 	guessedLetters := make(map[rune]bool)
+	wrongLetters := []rune{} // Liste pour stocker les lettres fausses
 	tries := 6
 
 	// Crée un tableau de runes pour représenter le mot deviné
@@ -76,6 +77,14 @@ func playHangman() {
 		clear()
 		StickMan(6 - tries)
 		fmt.Println("Mot :", string(guessedWord))
+
+		// Affiche les lettres fausses
+		fmt.Print("Lettres fausses : [ ")
+		for _, letter := range wrongLetters {
+			fmt.Printf("%c ", letter)
+		}
+		fmt.Println("]")
+
 		fmt.Printf("Il te reste %d essais. Devine une lettre : ", tries)
 		var guess string
 		fmt.Scanln(&guess)
@@ -105,6 +114,7 @@ func playHangman() {
 			fmt.Println("Bien joué !")
 		} else {
 			tries--
+			wrongLetters = append(wrongLetters, letter) // Ajoute la lettre incorrecte
 			fmt.Println("Mauvaise lettre.")
 		}
 
